@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 
 const UserAccount = () => {
-    const { user, loading, signOut } = useAuth();
+    const { user, loading, logout } = useAuth();
     const router = useRouter();
 
     useEffect(() => {
@@ -17,8 +17,8 @@ const UserAccount = () => {
         <>
             Uid: {user?.uid}
             Email: {user?.email}
-            <button onClick={signOut}>
-                signOut
+            <button onClick={logout}>
+                logout
             </button>
         </>
     )

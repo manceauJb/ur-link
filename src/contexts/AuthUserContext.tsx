@@ -13,7 +13,7 @@ export interface AuthUserContextType {
   loading: boolean;
   signInWithEmailAndPassword: (email: string, password: string) => Promise<UserCredential>;
   createUserWithEmailAndPassword: (email: string, password: string) => Promise<UserCredential>;
-  signOut: () => Promise<void>;
+  logout: () => Promise<void>;
 }
 
 const AuthUserContext = createContext<AuthUserContextType>({} as AuthUserContextType);
