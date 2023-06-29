@@ -8,8 +8,8 @@ const UserAccount = () => {
     const router = useRouter();
 
     useEffect(() => {
-        if (!loading && !user) {
-            router.push('/');
+        if (!loading && !user) {
+            router.push('/account/login');
         }
     }, [user, loading]);
 

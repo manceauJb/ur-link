@@ -32,7 +32,7 @@ export default function useFirebaseAuth() {
 
   const clear = () => {
     setUser(null);
-    setLoading(true);
+    setLoading(false);
   };
 
   const signInWithEmail = (email: string, password: string) =>
