@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { ReactElement, useEffect } from 'react';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import {
@@ -17,6 +17,7 @@ type LoginFormType = {
 
 const Login = () => {
     const router = useRouter();
+    const { signInWithEmailAndPassword, user, loading } = useAuth();
 
     const {
         register,
@@ -24,7 +25,6 @@ const Login = () => {
         formState: { errors, isSubmitting },
     } = useForm<LoginFormType>()
 
-    const { signInWithEmailAndPassword } = useAuth();
 
     const onSubmit: SubmitHandler<LoginFormType> = async ({
         email, password
@@ -41,6 +41,12 @@ const Login = () => {
                 // An error occurred. Set error message to be displayed to user
             });
     }
+
+    useEffect(() => {
+        if (user) {
+            router.push('/account/user');
+        }
+    }, [loading]);
 
     return (
         <>
@@ -87,7 +93,7 @@ const Login = () => {
                                 as={NextLink}
                                 href="/signup"
                                 variant='link'
-                                isLoading={isSubmitting}
+                                disabled={isSubmitting}
                             >
                                 Inscription
                             </Button>
