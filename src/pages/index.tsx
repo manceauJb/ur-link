@@ -1,18 +1,16 @@
+import { FormEvent, ReactElement } from 'react'
 import Head from 'next/head'
-import { Inter } from 'next/font/google'
 import BaseLayout from '@/components/layouts/BaseLayout'
 import { Box, Button, Card, CardBody, CardHeader, Container, Flex, Heading, Image, Input, InputGroup, InputLeftAddon, Text } from '@chakra-ui/react'
-import { FormEvent } from 'react'
 
 export default function Home() {
-
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     console.log(event);
     event.preventDefault();
   };
 
   return (
-    <BaseLayout>
+    <>
       <Head>
         <title>Ur-Link</title>
         <meta name="description" content="personnal project" />
@@ -61,7 +59,14 @@ export default function Home() {
           </Flex>
         </form>
       </Container>
+    </>
+  )
+}
 
+Home.getLayout = (page: ReactElement) => {
+  return (
+    <BaseLayout>
+      {page}
     </BaseLayout>
   )
 }

@@ -1,11 +1,24 @@
+import { ReactElement, ReactNode } from 'react';
+import { NextPage } from 'next';
 import type { AppProps } from 'next/app'
-import { ChakraProvider } from '@chakra-ui/react'
 import { Rubik } from 'next/font/google';
+import { ChakraProvider } from '@chakra-ui/react'
 import { theme } from '../../theme';
+import { AuthUserProvider } from '@/contexts/AuthUserContext'
 
 const rubik = Rubik({ subsets: ['latin'] });
 
-export default function App({ Component, pageProps }: AppProps) {
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+  getLayout?: (page: ReactElement) => ReactNode
+}
+ 
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout
+}
+
+export default function App({ Component, pageProps }: AppPropsWithLayout) {
+  const getLayout = Component.getLayout ?? ((page) => page)
+
   return (
     <>
       <style jsx global>
@@ -15,9 +28,11 @@ export default function App({ Component, pageProps }: AppProps) {
           }
         `}
       </style>
-      <ChakraProvider theme={theme}>
-        <Component {...pageProps} />
-      </ChakraProvider>
+      <AuthUserProvider>
+        <ChakraProvider theme={theme}>
+          {getLayout(<Component {...pageProps} />)}
+        </ChakraProvider>
+      </AuthUserProvider>
     </>
   );
 }
