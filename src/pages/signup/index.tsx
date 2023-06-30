@@ -98,7 +98,7 @@ const Signup = () => {
                                 colorScheme="blue"
                                 type="submit"
                             >
-                                S'inscrire
+                                S&apos;inscrire
                             </Button>
                             <Button
                                 as={NextLink}
