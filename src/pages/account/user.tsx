@@ -9,7 +9,7 @@ const UserAccount = () => {
 
     useEffect(() => {
         if (!loading && !user) {
-            router.push('/account/login');
+            router.push('/');
         }
     }, [user, loading]);
 
