@@ -3,7 +3,7 @@ import Head from 'next/head'
 import BaseLayout from '@/components/layouts/BaseLayout'
 import Feature from '@/components/Feature';
 
-import { Box, Button, Card, CardBody, CardHeader, Container, Flex, Heading, Icon, Image, Input, InputGroup, InputLeftAddon, SimpleGrid, Text, VStack } from '@chakra-ui/react'
+import { Box, Button, Card, CardBody, CardHeader, Container, Flex, Heading, Icon, Image, Input, InputGroup, InputLeftAddon, SimpleGrid, Text, useColorModeValue, VStack } from '@chakra-ui/react'
 import { FcAlarmClock, FcBearish, FcViewDetails } from 'react-icons/fc';
 
 export default function Home() {
@@ -21,7 +21,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <VStack gap={100} mb={100}>
+      <VStack gap={100} mb={100} mt={200}>
         <Flex
           direction={['column-reverse', 'column-reverse', 'row']}
           alignItems="center"
@@ -48,33 +48,40 @@ export default function Home() {
           </Box>
         </Flex>
 
-        <Container ml={0}>
-          <form onSubmit={handleSubmit}>
-            <Flex direction={['column', 'column', 'row']} alignItems="start" gap={3}>
-              <InputGroup>
-                <InputLeftAddon>
-                  ur-link/
-                </InputLeftAddon>
-                <Input placeholder='mon-entreprise' />
-              </InputGroup>
-              <Button type="submit" minW="4xs">
-                Réserver mon lien
-              </Button>
-            </Flex>
-          </form>
-        </Container>
+        <Box bg={useColorModeValue('gray.50', 'gray.900')} width="100%" p={20}>
+          <Container>
+            <form onSubmit={handleSubmit}>
+              <Flex direction={['column', 'column', 'row']} alignItems="start" gap={3}>
+                <InputGroup>
+                  <InputLeftAddon>
+                    ur-link/
+                  </InputLeftAddon>
+                  <Input placeholder='mon-entreprise' />
+                </InputGroup>
+                <Button type="submit" minW="4xs">
+                  Réserver mon lien
+                </Button>
+              </Flex>
+            </form>
+            <Box mt={10}>
+              <Text>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam quis laoreet nisi. Vivamus hendrerit leo turpis.
+                Sed turpis ex, suscipit id nisi vitae, pharetra rutrum lacus. Sed nec varius augue. Donec finibus eget velit nec venenatis.
+              </Text>
+              <Text>
+                Cras eleifend sapien felis, vel semper eros lacinia eget. Quisque ut interdum tellus. Integer neque nisl, accumsan a finibus sit amet, ullamcorper eu sem.
+                Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec vitae congue ipsum.
+                Curabitur consectetur ante eget tellus auctor ultrices. Fusce malesuada nibh quis augue dapibus consequat.
+              </Text>
+            </Box>
+          </Container>
+        </Box>
 
-        <Container>
-          <Text>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam quis laoreet nisi. Vivamus hendrerit leo turpis.
-            Sed turpis ex, suscipit id nisi vitae, pharetra rutrum lacus. Sed nec varius augue. Donec finibus eget velit nec venenatis.
-            Cras eleifend sapien felis, vel semper eros lacinia eget. Quisque ut interdum tellus. Integer neque nisl, accumsan a finibus sit amet, ullamcorper eu sem.
-            Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec vitae congue ipsum.
-            Curabitur consectetur ante eget tellus auctor ultrices. Fusce malesuada nibh quis augue dapibus consequat.
-          </Text>
-        </Container>
-
-        <SimpleGrid columns={{ base: 1, md: 3 }} spacing={10}>
+        <SimpleGrid
+          columns={{ base: 1, md: 3 }}
+          spacing={10}
+          maxW="70vw"
+        >
           <Feature
             icon={<Icon as={FcBearish} w={10} h={10} />}
             title={'Stats tracker'}
