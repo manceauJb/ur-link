@@ -1,8 +1,7 @@
 import { ReactElement } from 'react';
-import { Box, SimpleGrid, Icon, Text, Stack, Flex } from '@chakra-ui/react';
-import { FcAssistant, FcDonate, FcInTransit } from 'react-icons/fc';
+import { Text, Stack, Flex } from '@chakra-ui/react';
 
-interface FeatureProps {
+type FeatureProps = {
   title: string;
   text: string;
   icon: ReactElement;
@@ -28,4 +27,4 @@ const Feature = ({ title, text, icon }: FeatureProps) => {
   );
 };
 
-export default Feature
+export default Feature;

@@ -1,7 +1,8 @@
 import { FormEvent, ReactElement } from 'react'
 import Head from 'next/head'
 import BaseLayout from '@/components/layouts/BaseLayout'
-import Feature from '@/components/feature';
+import Feature from '@/components/Feature';
+
 import { Box, Button, Card, CardBody, CardHeader, Container, Flex, Heading, Icon, Image, Input, InputGroup, InputLeftAddon, SimpleGrid, Text, VStack } from '@chakra-ui/react'
 import { FcAlarmClock, FcBearish, FcViewDetails } from 'react-icons/fc';
 
