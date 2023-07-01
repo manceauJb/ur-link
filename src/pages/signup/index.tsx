@@ -1,8 +1,8 @@
-import { ReactElement, useEffect, useState } from 'react';
+import { ReactElement, useEffect } from 'react';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import {
-    Box, FormControl, FormLabel, Input, Stack, Button, Heading, useColorModeValue, FormErrorMessage,
+    Box, FormControl, FormLabel, Input, Stack, Button, Heading, useColorModeValue, Text,
 } from '@chakra-ui/react';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -23,24 +23,25 @@ const Signup = () => {
     const {
         register,
         handleSubmit,
-        setError: setFieldError,
+        setError,
         formState: { errors, isSubmitting },
     } = useForm<SignUpFormType>()
 
     const onSubmit: SubmitHandler<SignUpFormType> = async ({
-        email, passwordOne, passwordTwo,
+        email, passwordOne,
     }) => {
         // check if passwords match. If they do, create user in Firebase
         // and redirect to your logged in page.
         return createUserWithEmailAndPassword(email, passwordOne)
-            .then((authUser) => {
+            .then(() => {
                 console.log("Success. The user is created in Firebase")
                 router.push("/account/user");
             })
             .catch((error) => {
-                console.log(error.message);
-                setFieldError('root', error);
-                // An error occurred. Set error message to be displayed to user
+                setError('root', {
+                    message: error.message,
+                    type: error.code,
+                });
             });
     };
 
@@ -68,9 +69,6 @@ const Signup = () => {
                                 defaultValue="test@gmail.com"
                                 {...register('email', { required: true })}
                             />
-                            <FormErrorMessage>
-                                {errors.email && errors.email.message}
-                            </FormErrorMessage>
                         </FormControl>
                         <FormControl id="passwordOne" isRequired>
                             <FormLabel>Mot de passe</FormLabel>
@@ -78,9 +76,6 @@ const Signup = () => {
                                 type="password"
                                 {...register('passwordOne', { required: true })}
                             />
-                            <FormErrorMessage>
-                                {errors.passwordOne && errors.passwordOne.message}
-                            </FormErrorMessage>
                         </FormControl>
                         <FormControl id="passwordTwo" isRequired>
                             <FormLabel>Confirmation du mot de passe</FormLabel>
@@ -88,14 +83,11 @@ const Signup = () => {
                                 type="password"
                                 {...register('passwordTwo', { required: true })}
                             />
-                            <FormErrorMessage>
-                                {errors.passwordTwo && errors.passwordTwo.message}
-                            </FormErrorMessage>
                         </FormControl>
                         {errors.root && (
-                            <FormErrorMessage>
+                            <Text fontSize="xs" color="red">
                                 {errors.root.message}
-                            </FormErrorMessage>
+                            </Text>
                         )}
                         <Stack mt={3} spacing={6}>
                             <Button

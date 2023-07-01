@@ -2,7 +2,7 @@ import { ReactElement, useEffect } from 'react';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import {
-    Box, FormControl, FormLabel, Input, Stack, Link, Button, Heading, useColorModeValue, FormErrorMessage,
+    Box, FormControl, FormLabel, Input, Stack, Link, Button, Heading, useColorModeValue, FormErrorMessage, Text,
 } from '@chakra-ui/react';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -22,6 +22,7 @@ const Login = () => {
     const {
         register,
         handleSubmit,
+        setError,
         formState: { errors, isSubmitting },
     } = useForm<LoginFormType>()
 
@@ -37,8 +38,10 @@ const Login = () => {
                 router.push("/account/user");
             })
             .catch((error) => {
-                console.log(error.message);
-                // An error occurred. Set error message to be displayed to user
+                setError('root', {
+                    message: error.message,
+                    type: error.code,
+                });
             });
     }
 
@@ -66,9 +69,6 @@ const Login = () => {
                                 defaultValue="test@gmail.com"
                                 {...register('email', { required: true })}
                             />
-                            <FormErrorMessage>
-                                {errors.email && errors.email.message}
-                            </FormErrorMessage>
                         </FormControl>
                         <FormControl id="password" isRequired>
                             <FormLabel>Mot de passe</FormLabel>
@@ -76,11 +76,13 @@ const Login = () => {
                                 type="password"
                                 {...register('password', { required: true })}
                             />
-                            <FormErrorMessage>
-                                {errors.password && errors.password.message}
-                            </FormErrorMessage>
                         </FormControl>
                         <Link as={NextLink} color={'blue.400'} href="/">Mot de passe, oublié ?</Link>
+                        {errors.root && (
+                            <Text fontSize="xs" color="red">
+                                {errors.root.message}
+                            </Text>
+                        )}
                         <Stack mt={3} spacing={6}>
                             <Button
                                 isLoading={isSubmitting}

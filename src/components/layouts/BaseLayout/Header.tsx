@@ -1,10 +1,11 @@
-import { Box, Button, Flex, Heading, useColorModeValue } from '@chakra-ui/react';
+import Link from 'next/link';
+import { Box, Button, Flex, Heading, IconButton, Popover, PopoverArrow, PopoverBody, PopoverContent, PopoverTrigger, Stack, useColorModeValue } from '@chakra-ui/react';
 import ThemeToggle from './ThemeToggle';
 import { useAuth } from '@/contexts/AuthUserContext';
-import Link from 'next/link';
+import { BsThreeDotsVertical } from 'react-icons/bs';
 
 const Header = () => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
 
   return (
     <Flex
@@ -25,18 +26,13 @@ const Header = () => {
         ),
       }}
     >
-      <Heading as='h1' size='xl' noOfLines={1}>
-        UR-Link
-      </Heading>
+      <Link href="/">
+        <Heading as='h1' size='xl' noOfLines={1}>
+          UR-Link
+        </Heading>
+      </Link>
       <Flex marginLeft="auto" gap={3}>
-        {user ? (
-          <Button
-            as={Link}
-            href="/account/user"
-          >
-            Profil
-          </Button>
-        ) : (
+        {!user && (
           <Button
             as={Link}
             href="/login"
@@ -45,6 +41,41 @@ const Header = () => {
           </Button>
         )}
         <ThemeToggle />
+        {user && (
+          <Popover placement="bottom" isLazy>
+            <PopoverTrigger>
+              <IconButton
+                aria-label="User options"
+                icon={<BsThreeDotsVertical />}
+                variant="solid"
+                w="fit-content"
+              />
+            </PopoverTrigger>
+            <PopoverContent w="fit-content" _focus={{ boxShadow: 'none' }}>
+              <PopoverArrow />
+              <PopoverBody>
+                <Stack>
+                  <Button
+                    as={Link}
+                    href="/account/user"
+                    variant="ghost"
+                    size="sm"
+                  >
+                    Profil
+                  </Button>
+                  <Button
+                    size="sm"
+                    onClick={logout}
+                    variant="ghost"
+                    colorScheme="red"
+                  >
+                    Logout
+                  </Button>
+                </Stack>
+              </PopoverBody>
+            </PopoverContent>
+          </Popover>
+        )}
       </Flex>
     </Flex>
   );
