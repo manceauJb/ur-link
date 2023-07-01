@@ -54,7 +54,7 @@ const Signup = () => {
         <>
             <Heading alignSelf="center" fontSize={'4xl'}>Inscription</Heading>
             <Box
-                rounded={'lg'}
+                rounded={[null, 'lg']}
                 bg={useColorModeValue('white', 'gray.700')}
                 boxShadow={'lg'}
                 p={8}

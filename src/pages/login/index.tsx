@@ -52,7 +52,7 @@ const Login = () => {
         <>
             <Heading alignSelf="center" fontSize={'4xl'}>Connexion</Heading>
             <Box
-                rounded={'lg'}
+                rounded={[null, 'lg']}
                 bg={useColorModeValue('white', 'gray.700')}
                 boxShadow={'lg'}
                 p={8}

@@ -30,7 +30,10 @@ export default function Home() {
           gap={10}
           w="full"
         >
-          <Card maxW={["", "", "md"]}>
+          <Card
+            rounded={[null, null, 'lg']}
+            maxW={["", "", "md"]}
+          >
             <CardHeader>
               <Heading fontSize='2xl'>
                 Neque porro quisquam est qui dolorem ipsum quia dolor sit amet
@@ -43,12 +46,12 @@ export default function Home() {
             </CardBody>
           </Card>
 
-          <Box>
+          <Box px={5}>
             <Image src="https://picsum.photos/400/400" alt="random.picsum" />
           </Box>
         </Flex>
 
-        <Box bg={useColorModeValue('gray.50', 'gray.900')} width="100%" p={20}>
+        <Box bg={useColorModeValue('gray.50', 'gray.900')} width="100%" p="2em">
           <Container>
             <form onSubmit={handleSubmit}>
               <Flex direction={['column', 'column', 'row']} alignItems="start" gap={3}>
