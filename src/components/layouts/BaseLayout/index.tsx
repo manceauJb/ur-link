@@ -18,8 +18,9 @@ const BaseLayout = ({ children }: LayoutProps) => {
       <Header />
       <Box
         as="main"
-        paddingY={22}
-        minH="70vh"
+        pt="80px"
+        pb={22}
+        minH="100vh"
       >
         {children}
       </Box>

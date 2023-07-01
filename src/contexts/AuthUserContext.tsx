@@ -6,13 +6,16 @@ import { UserCredential } from 'firebase/auth';
 export type UserInfo = {
   uid: string;
   email: string | null;
+  username: string | null;
 };
 
 export interface AuthUserContextType {
-  user: UserInfo|null;
+  user: UserInfo | null;
   loading: boolean;
   signInWithEmailAndPassword: (email: string, password: string) => Promise<UserCredential>;
   createUserWithEmailAndPassword: (email: string, password: string) => Promise<UserCredential>;
+  updateUserEmail: (email: string) => Promise<void>;
+  updateUserUsername: (username: string | null) => Promise<void>;
   logout: () => Promise<void>;
 }
 
