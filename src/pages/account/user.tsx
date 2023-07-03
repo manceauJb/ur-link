@@ -1,11 +1,10 @@
-import BaseLayout from "@/components/layouts/BaseLayout";
-import EmailForm from "@/components/user/EmailForm";
-import UsernameForm from "@/components/user/UsernameForm";
-import { useAuth } from "@/contexts/AuthUserContext";
-import { Flex } from "@chakra-ui/react";
-import { useRouter } from "next/router";
-import { ReactElement, useEffect } from "react";
-
+import BaseLayout from '@/components/layouts/BaseLayout';
+import EmailForm from '@/components/user/EmailForm';
+import UsernameForm from '@/components/user/UsernameForm';
+import { useAuth } from '@/contexts/AuthUserContext';
+import { Flex } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
+import { ReactElement, useEffect } from 'react';
 
 const UserAccount = () => {
     const { user, loading } = useAuth();
@@ -19,14 +18,7 @@ const UserAccount = () => {
 
     return (
         <>
-            
-            <Flex
-                direction="column"
-                align={'center'}
-                justify={'center'}
-                px={5}
-                gap={10}
-            >
+            <Flex direction="column" align={'center'} justify={'center'} px={5} gap={10}>
                 {loading && 'Loading ...'}
                 {!loading && (
                     <>
@@ -36,15 +28,11 @@ const UserAccount = () => {
                 )}
             </Flex>
         </>
-    )
-}
+    );
+};
 
 export default UserAccount;
 
 UserAccount.getLayout = (page: ReactElement) => {
-    return (
-        <BaseLayout>
-            {page}
-        </BaseLayout>
-    );
-}
+    return <BaseLayout>{page}</BaseLayout>;
+};

@@ -2,7 +2,16 @@ import { ReactElement, useEffect } from 'react';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import {
-    Box, FormControl, FormLabel, Input, Stack, Link, Button, Heading, useColorModeValue, FormErrorMessage, Text,
+    Box,
+    FormControl,
+    FormLabel,
+    Input,
+    Stack,
+    Link,
+    Button,
+    Heading,
+    useColorModeValue,
+    Text,
 } from '@chakra-ui/react';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -13,7 +22,7 @@ import LoginLayout from '@/components/layouts/LoginLayout';
 type LoginFormType = {
     email: string;
     password: string;
-}
+};
 
 const Login = () => {
     const router = useRouter();
@@ -24,18 +33,15 @@ const Login = () => {
         handleSubmit,
         setError,
         formState: { errors, isSubmitting },
-    } = useForm<LoginFormType>()
+    } = useForm<LoginFormType>();
 
-
-    const onSubmit: SubmitHandler<LoginFormType> = async ({
-        email, password
-    }) => {
+    const onSubmit: SubmitHandler<LoginFormType> = async ({ email, password }) => {
         // check if passwords match. If they do, create user in Firebase
         // and redirect to your logged in page.
         return signInWithEmailAndPassword(email, password)
-            .then((authUser) => {
-                console.log("Success. The user is login in Firebase")
-                router.push("/account/user");
+            .then(() => {
+                console.log('Success. The user is login in Firebase');
+                router.push('/account/user');
             })
             .catch((error) => {
                 setError('root', {
@@ -43,7 +49,7 @@ const Login = () => {
                     type: error.code,
                 });
             });
-    }
+    };
 
     useEffect(() => {
         if (user) {
@@ -53,7 +59,9 @@ const Login = () => {
 
     return (
         <>
-            <Heading alignSelf="center" fontSize={'4xl'}>Connexion</Heading>
+            <Heading alignSelf="center" fontSize={'4xl'}>
+                Connexion
+            </Heading>
             <Box
                 rounded={[null, 'lg']}
                 bg={useColorModeValue('white', 'gray.700')}
@@ -72,29 +80,24 @@ const Login = () => {
                         </FormControl>
                         <FormControl id="password" isRequired>
                             <FormLabel>Mot de passe</FormLabel>
-                            <Input
-                                type="password"
-                                {...register('password', { required: true })}
-                            />
+                            <Input type="password" {...register('password', { required: true })} />
                         </FormControl>
-                        <Link as={NextLink} color={'blue.400'} href="/">Mot de passe, oublié ?</Link>
+                        <Link as={NextLink} color={'blue.400'} href="/">
+                            Mot de passe, oublié ?
+                        </Link>
                         {errors.root && (
                             <Text fontSize="xs" color="red">
                                 {errors.root.message}
                             </Text>
                         )}
                         <Stack mt={3} spacing={6}>
-                            <Button
-                                isLoading={isSubmitting}
-                                colorScheme="blue"
-                                type="submit"
-                            >
+                            <Button isLoading={isSubmitting} colorScheme="blue" type="submit">
                                 Se connecter
                             </Button>
                             <Button
                                 as={NextLink}
                                 href="/signup"
-                                variant='link'
+                                variant="link"
                                 disabled={isSubmitting}
                             >
                                 Inscription
@@ -102,18 +105,13 @@ const Login = () => {
                         </Stack>
                     </Stack>
                 </form>
-
             </Box>
         </>
     );
-}
+};
 
 export default Login;
 
 Login.getLayout = (page: ReactElement) => {
-    return (
-        <LoginLayout>
-            {page}
-        </LoginLayout>
-    );
-}
+    return <LoginLayout>{page}</LoginLayout>;
+};

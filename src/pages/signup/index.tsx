@@ -2,7 +2,15 @@ import { ReactElement, useEffect } from 'react';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import {
-    Box, FormControl, FormLabel, Input, Stack, Button, Heading, useColorModeValue, Text,
+    Box,
+    FormControl,
+    FormLabel,
+    Input,
+    Stack,
+    Button,
+    Heading,
+    useColorModeValue,
+    Text,
 } from '@chakra-ui/react';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -14,7 +22,7 @@ type SignUpFormType = {
     email: string;
     passwordOne: string;
     passwordTwo: string;
-}
+};
 
 const Signup = () => {
     const router = useRouter();
@@ -25,17 +33,15 @@ const Signup = () => {
         handleSubmit,
         setError,
         formState: { errors, isSubmitting },
-    } = useForm<SignUpFormType>()
+    } = useForm<SignUpFormType>();
 
-    const onSubmit: SubmitHandler<SignUpFormType> = async ({
-        email, passwordOne,
-    }) => {
+    const onSubmit: SubmitHandler<SignUpFormType> = async ({ email, passwordOne }) => {
         // check if passwords match. If they do, create user in Firebase
         // and redirect to your logged in page.
         return createUserWithEmailAndPassword(email, passwordOne)
             .then(() => {
-                console.log("Success. The user is created in Firebase")
-                router.push("/account/user");
+                console.log('Success. The user is created in Firebase');
+                router.push('/account/user');
             })
             .catch((error) => {
                 setError('root', {
@@ -53,7 +59,9 @@ const Signup = () => {
 
     return (
         <>
-            <Heading alignSelf="center" fontSize={'4xl'}>Inscription</Heading>
+            <Heading alignSelf="center" fontSize={'4xl'}>
+                Inscription
+            </Heading>
             <Box
                 rounded={[null, 'lg']}
                 bg={useColorModeValue('white', 'gray.700')}
@@ -90,17 +98,13 @@ const Signup = () => {
                             </Text>
                         )}
                         <Stack mt={3} spacing={6}>
-                            <Button
-                                isLoading={isSubmitting}
-                                colorScheme="blue"
-                                type="submit"
-                            >
+                            <Button isLoading={isSubmitting} colorScheme="blue" type="submit">
                                 S&apos;inscrire
                             </Button>
                             <Button
                                 as={NextLink}
                                 href="/login"
-                                variant='link'
+                                variant="link"
                                 disabled={isSubmitting}
                             >
                                 Se connecter
@@ -108,18 +112,13 @@ const Signup = () => {
                         </Stack>
                     </Stack>
                 </form>
-
             </Box>
         </>
     );
-}
+};
 
 export default Signup;
 
 Signup.getLayout = (page: ReactElement) => {
-    return (
-        <LoginLayout>
-            {page}
-        </LoginLayout>
-    );
-}
+    return <LoginLayout>{page}</LoginLayout>;
+};

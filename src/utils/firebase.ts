@@ -1,7 +1,6 @@
-import { initializeApp, getApps } from "firebase/app";
-import { Auth, getAuth } from "firebase/auth";
-import { Firestore, getFirestore } from "firebase/firestore";
-
+import { initializeApp, getApps } from 'firebase/app';
+import { Auth, getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY,

@@ -1,17 +1,11 @@
 import { useAuth } from '@/contexts/AuthUserContext';
-import {
-    FormControl,
-    FormErrorMessage,
-    Input,
-    InputGroup,
-    InputLeftAddon,
-} from '@chakra-ui/react';
+import { FormControl, FormErrorMessage, Input, InputGroup, InputLeftAddon } from '@chakra-ui/react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import FormCard from '../FormCard';
 
 type UsernameFormType = {
     username: string | null;
-}
+};
 
 const UsernameForm = () => {
     const { user, updateUserUsername } = useAuth();
@@ -24,19 +18,20 @@ const UsernameForm = () => {
     } = useForm<UsernameFormType>({
         defaultValues: {
             username: user?.username,
-        }
-    })
+        },
+    });
 
-    const onSubmit: SubmitHandler<UsernameFormType> = async ({ username }) => updateUserUsername(username)
-        .then((user) => {
-            console.log('ok');
-        })
-        .catch((error) => {
-            setError('username', {
-                message: error.message,
-                type: error.code,
+    const onSubmit: SubmitHandler<UsernameFormType> = async ({ username }) =>
+        updateUserUsername(username)
+            .then(() => {
+                console.log('ok');
+            })
+            .catch((error) => {
+                setError('username', {
+                    message: error.message,
+                    type: error.code,
+                });
             });
-        });
 
     return (
         <FormCard
@@ -47,21 +42,13 @@ const UsernameForm = () => {
         >
             <FormControl id="username" isInvalid={Boolean(errors.username)}>
                 <InputGroup>
-                    <InputLeftAddon>
-                        ur-link/
-                    </InputLeftAddon>
-                    <Input
-                        type="username"
-                        placeholder="username"
-                        {...register('username')}
-                    />
+                    <InputLeftAddon>ur-link/</InputLeftAddon>
+                    <Input type="username" placeholder="username" {...register('username')} />
                 </InputGroup>
-                <FormErrorMessage>
-                    {errors.username?.message}
-                </FormErrorMessage>
+                <FormErrorMessage>{errors.username?.message}</FormErrorMessage>
             </FormControl>
         </FormCard>
     );
-}
+};
 
 export default UsernameForm;

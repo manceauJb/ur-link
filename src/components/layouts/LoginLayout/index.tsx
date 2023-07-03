@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { Box, Flex, Stack, useColorModeValue } from '@chakra-ui/react';
+import { Flex, Stack, useColorModeValue } from '@chakra-ui/react';
 
 type LayoutProps = {
     children: ReactNode;
