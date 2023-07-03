@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 import {
     User,
     createUserWithEmailAndPassword,
@@ -6,10 +6,10 @@ import {
     updateEmail,
     signOut,
     updateProfile,
-} from "firebase/auth";
+} from 'firebase/auth';
 import { doc, setDoc, deleteDoc } from 'firebase/firestore';
-import { auth, firestore } from "@/utils/firebase";
-import { UserInfo } from "@/contexts/AuthUserContext";
+import { auth, firestore } from '@/utils/firebase';
+import { UserInfo } from '@/contexts/AuthUserContext';
 
 const formatAuthUser = (user: User): UserInfo => ({
     uid: user.uid,
@@ -29,7 +29,7 @@ export default function useFirebaseAuth() {
         }
 
         setLoading(true);
-        var formattedUser = formatAuthUser(authState);
+        const formattedUser = formatAuthUser(authState);
         setUser(formattedUser);
         setLoading(false);
     };
@@ -49,7 +49,7 @@ export default function useFirebaseAuth() {
         const user = auth.currentUser;
         if (!user) throw new Error('User invalid');
         return updateEmail(user, email);
-    }
+    };
 
     const updateUserUsername = async (username: string | null) => {
         const user = auth.currentUser;
@@ -69,7 +69,7 @@ export default function useFirebaseAuth() {
         }
 
         return updateProfile(user, { displayName: username });
-    }
+    };
 
     // listen for Firebase state change
     useEffect(() => {
