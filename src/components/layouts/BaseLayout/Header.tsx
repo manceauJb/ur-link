@@ -73,6 +73,14 @@ const Header = () => {
                                         Profil
                                     </Button>
                                     <Button
+                                        as={Link}
+                                        href="/account/links"
+                                        variant="ghost"
+                                        size="sm"
+                                    >
+                                        Liens
+                                    </Button>
+                                    <Button
                                         size="sm"
                                         onClick={logout}
                                         variant="ghost"
