@@ -1,9 +1,17 @@
-import { Button, FormControl, FormErrorMessage, FormLabel, Input } from '@chakra-ui/react';
+import {
+    Button,
+    Flex,
+    FormControl,
+    FormErrorMessage,
+    FormLabel,
+    Input,
+    Stack,
+} from '@chakra-ui/react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import useLinks from '@/hooks/useLinks';
 
 type CreationFormProps = {
-    onClose(id: string): void;
+    onClose(id?: string): void;
 };
 
 type CreationFormType = {
@@ -43,9 +51,13 @@ const CreationForm = ({ onClose }: CreationFormProps) => {
                 <Input {...register('url', { required: true })} />
                 <FormErrorMessage>{errors.url && errors.url.message}</FormErrorMessage>
             </FormControl>
-            <Button isLoading={isSubmitting} type="submit" ml="auto" colorScheme="blue">
-                Enregistrer
-            </Button>
+
+            <Flex mt={4} gap={2}>
+                <Button onClick={() => onClose()}>Annuler</Button>
+                <Button isLoading={isSubmitting} type="submit" ml="auto" colorScheme="blue">
+                    Ajouter
+                </Button>
+            </Flex>
         </form>
     );
 };
