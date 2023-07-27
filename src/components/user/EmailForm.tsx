@@ -1,4 +1,4 @@
-import { FormControl, FormErrorMessage, FormLabel, Input } from '@chakra-ui/react';
+import { FormControl, FormErrorMessage, FormLabel, Input, useToast } from '@chakra-ui/react';
 import { useAuth } from '@/contexts/AuthUserContext';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import FormCard from '../FormCard';
@@ -8,13 +8,15 @@ type EmailFormType = {
 };
 
 const EmailForm = () => {
+    const toast = useToast();
     const { user, updateUserEmail } = useAuth();
 
     const {
         register,
         handleSubmit,
         setError,
-        formState: { errors, isSubmitting },
+        formState: { errors, isSubmitting, isDirty },
+        reset,
     } = useForm<EmailFormType>({
         defaultValues: {
             email: user?.email,
@@ -24,7 +26,11 @@ const EmailForm = () => {
     const onSubmit: SubmitHandler<EmailFormType> = async ({ email }) =>
         updateUserEmail(email as string)
             .then(() => {
-                console.log('ok');
+                toast({
+                    title: 'Adresse e-mail modifiée avec succès',
+                    status: 'success',
+                });
+                reset({ email });
             })
             .catch((error) => {
                 setError('email', {
@@ -35,8 +41,9 @@ const EmailForm = () => {
 
     return (
         <FormCard
+            disabled={!isDirty}
             title="Email"
-            subtitle="Votre adresse e-mail utilisée pour la connexion."
+            subtitle="Adresse e-mail utilisée pour la connexion."
             isLoading={isSubmitting}
             onSubmit={handleSubmit(onSubmit)}
         >

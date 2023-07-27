@@ -1,5 +1,12 @@
 import { useAuth } from '@/contexts/AuthUserContext';
-import { FormControl, FormErrorMessage, Input, InputGroup, InputLeftAddon } from '@chakra-ui/react';
+import {
+    FormControl,
+    FormErrorMessage,
+    Input,
+    InputGroup,
+    InputLeftAddon,
+    useToast,
+} from '@chakra-ui/react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import FormCard from '../FormCard';
 
@@ -8,13 +15,15 @@ type UsernameFormType = {
 };
 
 const UsernameForm = () => {
+    const toast = useToast();
     const { user, updateUserUsername } = useAuth();
 
     const {
         register,
         handleSubmit,
         setError,
-        formState: { errors, isSubmitting },
+        reset,
+        formState: { errors, isSubmitting, isDirty },
     } = useForm<UsernameFormType>({
         defaultValues: {
             username: user?.username,
@@ -24,7 +33,11 @@ const UsernameForm = () => {
     const onSubmit: SubmitHandler<UsernameFormType> = async ({ username }) =>
         updateUserUsername(username)
             .then(() => {
-                console.log('ok');
+                toast({
+                    title: 'Username modifié avec succès',
+                    status: 'success',
+                });
+                reset({ username });
             })
             .catch((error) => {
                 setError('username', {
@@ -35,6 +48,7 @@ const UsernameForm = () => {
 
     return (
         <FormCard
+            disabled={!isDirty}
             title="Username"
             subtitle="This is your URL namespace."
             isLoading={isSubmitting}
