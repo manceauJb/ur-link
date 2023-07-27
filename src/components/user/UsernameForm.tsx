@@ -14,7 +14,7 @@ const UsernameForm = () => {
         register,
         handleSubmit,
         setError,
-        formState: { errors, isSubmitting },
+        formState: { errors, isSubmitting, isDirty },
     } = useForm<UsernameFormType>({
         defaultValues: {
             username: user?.username,
@@ -35,6 +35,7 @@ const UsernameForm = () => {
 
     return (
         <FormCard
+            disabled={!isDirty}
             title="Username"
             subtitle="This is your URL namespace."
             isLoading={isSubmitting}

@@ -4,6 +4,7 @@ import { Button, Heading, Text, Card, CardHeader, CardBody, CardFooter } from '@
 type FormCardProps = {
     children: ReactNode;
     title: string;
+    disabled?: boolean;
     isLoading: boolean;
     onSubmit: FormEventHandler<HTMLFormElement>;
     submitCaption?: string;
@@ -15,6 +16,7 @@ const FormCard = ({
     title,
     subtitle,
     isLoading,
+    disabled,
     submitCaption = 'Enregistrer',
     onSubmit,
 }: FormCardProps) => (
@@ -28,7 +30,7 @@ const FormCard = ({
         <form onSubmit={onSubmit}>
             <CardBody>{children}</CardBody>
             <CardFooter>
-                <Button isLoading={isLoading} type="submit" ml="auto">
+                <Button isDisabled={disabled} isLoading={isLoading} type="submit" ml="auto">
                     {submitCaption}
                 </Button>
             </CardFooter>

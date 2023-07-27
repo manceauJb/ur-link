@@ -14,7 +14,7 @@ const EmailForm = () => {
         register,
         handleSubmit,
         setError,
-        formState: { errors, isSubmitting },
+        formState: { errors, isSubmitting, isDirty },
     } = useForm<EmailFormType>({
         defaultValues: {
             email: user?.email,
@@ -35,6 +35,7 @@ const EmailForm = () => {
 
     return (
         <FormCard
+            disabled={!isDirty}
             title="Email"
             subtitle="Votre adresse e-mail utilisée pour la connexion."
             isLoading={isSubmitting}
