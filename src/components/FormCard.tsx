@@ -18,7 +18,7 @@ const FormCard = ({
     submitCaption = 'Enregistrer',
     onSubmit,
 }: FormCardProps) => (
-    <Card width={'md'}>
+    <Card maxWidth={'md'} width="100%">
         <CardHeader>
             <Heading lineHeight={1.1} fontSize={{ base: '2xl', sm: '3xl' }}>
                 {title}
