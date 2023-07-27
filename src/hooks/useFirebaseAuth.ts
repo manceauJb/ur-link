@@ -7,7 +7,7 @@ import {
     signOut,
     updateProfile,
 } from 'firebase/auth';
-import { doc, setDoc, deleteDoc } from 'firebase/firestore';
+import { doc, setDoc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { auth, firestore } from '@/utils/firebase';
 import { UserInfo } from '@/contexts/AuthUserContext';
 
@@ -58,7 +58,7 @@ export default function useFirebaseAuth() {
         const currentUsername = user.displayName;
 
         if (username) {
-            await setDoc(doc(firestore, `users`, user.uid), { username });
+            await updateDoc(doc(firestore, `users`, user.uid), { username });
             await setDoc(doc(firestore, `usernames`, username), { uid: user.uid });
         }
 

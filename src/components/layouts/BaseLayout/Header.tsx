@@ -11,6 +11,7 @@ import {
     PopoverTrigger,
     Stack,
     useColorModeValue,
+    useDisclosure,
 } from '@chakra-ui/react';
 import ThemeToggle from './ThemeToggle';
 import { useAuth } from '@/contexts/AuthUserContext';
@@ -18,6 +19,7 @@ import { BsThreeDotsVertical } from 'react-icons/bs';
 
 const Header = () => {
     const { user, logout } = useAuth();
+    const { isOpen, onToggle, onClose } = useDisclosure();
 
     return (
         <Flex
@@ -51,9 +53,10 @@ const Header = () => {
                 )}
                 <ThemeToggle />
                 {user && (
-                    <Popover placement="bottom" isLazy>
+                    <Popover isOpen={isOpen} onClose={onClose} placement="bottom">
                         <PopoverTrigger>
                             <IconButton
+                                onClick={onToggle}
                                 aria-label="User options"
                                 icon={<BsThreeDotsVertical />}
                                 variant="solid"
@@ -62,7 +65,7 @@ const Header = () => {
                         </PopoverTrigger>
                         <PopoverContent w="fit-content" _focus={{ boxShadow: 'none' }}>
                             <PopoverArrow />
-                            <PopoverBody>
+                            <PopoverBody onClick={() => onClose()}>
                                 <Stack>
                                     <Button
                                         as={Link}

@@ -5,7 +5,7 @@ import {
     FormErrorMessage,
     FormLabel,
     Input,
-    Stack,
+    Text,
 } from '@chakra-ui/react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import useLinks from '@/hooks/useLinks';
@@ -24,6 +24,7 @@ const CreationForm = ({ onClose }: CreationFormProps) => {
 
     const {
         register,
+        setError,
         handleSubmit,
         formState: { errors, isSubmitting },
     } = useForm<CreationFormType>();
@@ -31,11 +32,13 @@ const CreationForm = ({ onClose }: CreationFormProps) => {
     const onSubmit: SubmitHandler<CreationFormType> = async ({ url, name }) => {
         createLink({ url, name })
             .then((res) => {
-                console.log('ok', res);
                 onClose(res);
             })
             .catch((error) => {
-                console.error(error);
+                setError('root', {
+                    message: error.message,
+                    type: error.code,
+                });
             });
     };
 
@@ -51,7 +54,11 @@ const CreationForm = ({ onClose }: CreationFormProps) => {
                 <Input {...register('url', { required: true })} />
                 <FormErrorMessage>{errors.url && errors.url.message}</FormErrorMessage>
             </FormControl>
-
+            {errors.root && (
+                <Text fontSize="xs" color="red">
+                    {errors.root.message}
+                </Text>
+            )}
             <Flex mt={4} gap={2}>
                 <Button onClick={() => onClose()}>Annuler</Button>
                 <Button isLoading={isSubmitting} type="submit" ml="auto" colorScheme="blue">
