@@ -60,7 +60,7 @@ const LinkCard = ({ url, name, id }: CardProps) => {
                 <AlertDialogOverlay>
                     <AlertDialogContent>
                         <AlertDialogHeader fontSize="lg" fontWeight="bold">
-                            Suppression du lien
+                            Suppression du lien &quot;{name}&quot;
                         </AlertDialogHeader>
                         <AlertDialogBody>Cette action est irréversible.</AlertDialogBody>
                         <AlertDialogFooter>

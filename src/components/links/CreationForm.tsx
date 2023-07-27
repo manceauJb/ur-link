@@ -16,6 +16,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import useLinks from '@/hooks/useLinks';
 import { useRef } from 'react';
 import { RiAddLine } from 'react-icons/ri';
+import { isValidUrl } from '@/utils/validation';
 
 type CreationFormProps = {
     isOpen: boolean;
@@ -71,7 +72,13 @@ const CreationForm = ({ isOpen, onClose }: CreationFormProps) => {
 
                             <FormControl id="url" isRequired isInvalid={Boolean(errors.url)} mt={2}>
                                 <FormLabel>Lien</FormLabel>
-                                <Input {...register('url', { required: true })} />
+                                <Input
+                                    {...register('url', {
+                                        required: true,
+                                        validate: (val) =>
+                                            isValidUrl(val) || 'Veuillez saisir un lien valide.',
+                                    })}
+                                />
                                 <FormErrorMessage>
                                     {errors.url && errors.url.message}
                                 </FormErrorMessage>
