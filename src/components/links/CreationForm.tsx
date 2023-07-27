@@ -1,6 +1,11 @@
 import {
+    AlertDialog,
+    AlertDialogOverlay,
+    AlertDialogContent,
+    AlertDialogHeader,
+    AlertDialogBody,
+    AlertDialogFooter,
     Button,
-    Flex,
     FormControl,
     FormErrorMessage,
     FormLabel,
@@ -9,8 +14,11 @@ import {
 } from '@chakra-ui/react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import useLinks from '@/hooks/useLinks';
+import { useRef } from 'react';
+import { RiAddLine } from 'react-icons/ri';
 
 type CreationFormProps = {
+    isOpen: boolean;
     onClose(id?: string): void;
 };
 
@@ -19,7 +27,8 @@ type CreationFormType = {
     name: string | null;
 };
 
-const CreationForm = ({ onClose }: CreationFormProps) => {
+const CreationForm = ({ isOpen, onClose }: CreationFormProps) => {
+    const cancelRef = useRef(null);
     const { createLink } = useLinks();
 
     const {
@@ -43,29 +52,56 @@ const CreationForm = ({ onClose }: CreationFormProps) => {
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <FormControl id="name" isRequired isInvalid={Boolean(errors.name)}>
-                <FormLabel>Nom</FormLabel>
-                <Input {...register('name', { required: true })} />
-                <FormErrorMessage>{errors.name && errors.name.message}</FormErrorMessage>
-            </FormControl>
-            <FormControl id="url" isRequired isInvalid={Boolean(errors.url)}>
-                <FormLabel>Lien</FormLabel>
-                <Input {...register('url', { required: true })} />
-                <FormErrorMessage>{errors.url && errors.url.message}</FormErrorMessage>
-            </FormControl>
-            {errors.root && (
-                <Text fontSize="xs" color="red">
-                    {errors.root.message}
-                </Text>
-            )}
-            <Flex mt={4} gap={2}>
-                <Button onClick={() => onClose()}>Annuler</Button>
-                <Button isLoading={isSubmitting} type="submit" ml="auto" colorScheme="blue">
-                    Ajouter
-                </Button>
-            </Flex>
-        </form>
+        <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
+            <AlertDialogOverlay>
+                <AlertDialogContent>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                            Lien
+                        </AlertDialogHeader>
+
+                        <AlertDialogBody>
+                            <FormControl id="name" isRequired isInvalid={Boolean(errors.name)}>
+                                <FormLabel>Nom</FormLabel>
+                                <Input {...register('name', { required: true })} />
+                                <FormErrorMessage>
+                                    {errors.name && errors.name.message}
+                                </FormErrorMessage>
+                            </FormControl>
+
+                            <FormControl id="url" isRequired isInvalid={Boolean(errors.url)} mt={2}>
+                                <FormLabel>Lien</FormLabel>
+                                <Input {...register('url', { required: true })} />
+                                <FormErrorMessage>
+                                    {errors.url && errors.url.message}
+                                </FormErrorMessage>
+                            </FormControl>
+
+                            {errors.root && (
+                                <Text fontSize="xs" color="red">
+                                    {errors.root.message}
+                                </Text>
+                            )}
+                        </AlertDialogBody>
+
+                        <AlertDialogFooter>
+                            <Button ref={cancelRef} onClick={() => onClose()}>
+                                Annuler
+                            </Button>
+                            <Button
+                                leftIcon={<RiAddLine />}
+                                isLoading={isSubmitting}
+                                type="submit"
+                                colorScheme="blue"
+                                ml={3}
+                            >
+                                Ajouter
+                            </Button>
+                        </AlertDialogFooter>
+                    </form>
+                </AlertDialogContent>
+            </AlertDialogOverlay>
+        </AlertDialog>
     );
 };
 
