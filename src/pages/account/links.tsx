@@ -6,8 +6,9 @@ import useLinks from '@/hooks/useLinks';
 import CreationForm from '@/components/links/CreationForm';
 import { RiAddCircleLine } from 'react-icons/ri';
 import LinkCard from '@/components/links/Card';
+import AuthenticatedGuard from '@/components/guards/AuthenticatedGuard';
 
-const UserAccount = () => {
+const UserLinks = () => {
     const { links, loading } = useLinks();
     const { isOpen, onClose, onOpen } = useDisclosure();
 
@@ -36,8 +37,11 @@ const UserAccount = () => {
     );
 };
 
-export default UserAccount;
-
-UserAccount.getLayout = (page: ReactElement) => {
+UserLinks.getLayout = (page: ReactElement) => {
     return <BaseLayout>{page}</BaseLayout>;
 };
+UserLinks.getGuard = (page: ReactElement) => {
+    return <AuthenticatedGuard>{page}</AuthenticatedGuard>;
+};
+
+export default UserLinks;

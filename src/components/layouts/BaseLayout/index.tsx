@@ -1,11 +1,11 @@
+import type { ReactElement } from 'react';
 import { Box, useColorModeValue } from '@chakra-ui/react';
-import type { ReactNode } from 'react';
 
 import Footer from './Footer';
 import Header from './Header';
 
 type LayoutProps = {
-    children: ReactNode;
+    children: ReactElement;
 };
 
 const BaseLayout = ({ children }: LayoutProps) => {

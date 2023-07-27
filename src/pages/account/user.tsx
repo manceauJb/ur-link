@@ -1,3 +1,5 @@
+import { ReactElement } from 'react';
+import AuthenticatedGuard from '@/components/guards/AuthenticatedGuard';
 import BaseLayout from '@/components/layouts/BaseLayout';
 import DescriptionForm from '@/components/user/DescriptionForm';
 import EmailForm from '@/components/user/EmailForm';
@@ -5,19 +7,10 @@ import UsernameForm from '@/components/user/UsernameForm';
 import { useAuth } from '@/contexts/AuthUserContext';
 import useUserParams from '@/hooks/useUserParams';
 import { Flex } from '@chakra-ui/react';
-import { useRouter } from 'next/router';
-import { ReactElement, useEffect } from 'react';
 
 const UserAccount = () => {
-    const { user, loading } = useAuth();
+    const { loading } = useAuth();
     const { loading: paramsLoading } = useUserParams();
-    const router = useRouter();
-
-    useEffect(() => {
-        if (!loading && !user) {
-            router.push('/');
-        }
-    }, [user, loading]);
 
     return (
         <>
@@ -35,8 +28,11 @@ const UserAccount = () => {
     );
 };
 
-export default UserAccount;
-
 UserAccount.getLayout = (page: ReactElement) => {
     return <BaseLayout>{page}</BaseLayout>;
 };
+UserAccount.getGuard = (page: ReactElement) => {
+    return <AuthenticatedGuard>{page}</AuthenticatedGuard>;
+};
+
+export default UserAccount;
