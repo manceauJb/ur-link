@@ -12,7 +12,8 @@ import {
 import { auth, firestore } from '@/utils/firebase';
 import { useAuth } from '@/contexts/AuthUserContext';
 
-type Link = {
+export type Link = {
+    id: string;
     url: string;
     name: string | null;
 };
@@ -25,13 +26,18 @@ export default function useLinks() {
 
     const linksStateChanged = async (links: QuerySnapshot<DocumentData>) => {
         // const res = await query;
-        const results = links.docs.map((link) => link.data() as Link);
-        console.log(results);
+        const results = links.docs.map(
+            (link) =>
+                ({
+                    id: link.id,
+                    ...link.data(),
+                } as Link),
+        );
         setLinks(results);
         setLoading(false);
     };
 
-    const createLink = async (link: Link): Promise<string> => {
+    const createLink = async (link: Partial<Link>): Promise<string> => {
         if (!auth.currentUser) throw new Error('permission error');
 
         const docRef = await addDoc(
