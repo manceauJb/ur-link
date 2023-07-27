@@ -40,7 +40,6 @@ const Login = () => {
         // and redirect to your logged in page.
         return signInWithEmailAndPassword(email, password)
             .then(() => {
-                console.log('Success. The user is login in Firebase');
                 router.push('/account/user');
             })
             .catch((error) => {

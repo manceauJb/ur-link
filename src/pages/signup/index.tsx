@@ -40,7 +40,6 @@ const Signup = () => {
         // and redirect to your logged in page.
         return createUserWithEmailAndPassword(email, passwordOne)
             .then(() => {
-                console.log('Success. The user is created in Firebase');
                 router.push('/account/user');
             })
             .catch((error) => {
