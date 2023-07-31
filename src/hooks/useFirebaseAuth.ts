@@ -18,6 +18,7 @@ const formatAuthUser = (user: User): UserInfo => ({
 });
 
 export default function useFirebaseAuth() {
+    const [token, setToken] = useState<string | null>(null);
     const [user, setUser] = useState<UserInfo | null>(null);
     const [loading, setLoading] = useState(true);
 
@@ -29,8 +30,11 @@ export default function useFirebaseAuth() {
         }
 
         setLoading(true);
+
         const formattedUser = formatAuthUser(authState);
         setUser(formattedUser);
+        await authState.getIdToken().then(setToken);
+
         setLoading(false);
     };
 
@@ -78,6 +82,7 @@ export default function useFirebaseAuth() {
     }, []);
 
     return {
+        token,
         user,
         loading,
         signInWithEmailAndPassword: signInWithEmail,

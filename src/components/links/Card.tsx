@@ -30,7 +30,7 @@ const LinkCard = ({ url, name, id }: CardProps) => {
 
     return (
         <>
-            <Card size="sm" maxWidth={'md'} width="100%">
+            <Card maxWidth={['md', 'lg']} width="100%">
                 <CardHeader>
                     <Heading size="md"> {name}</Heading>
                 </CardHeader>
