@@ -7,7 +7,7 @@ import {
     signOut,
     updateProfile,
 } from 'firebase/auth';
-import { doc, setDoc, deleteDoc } from 'firebase/firestore';
+import { doc, setDoc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { auth, firestore } from '@/utils/firebase';
 import { UserInfo } from '@/contexts/AuthUserContext';
 
@@ -18,6 +18,7 @@ const formatAuthUser = (user: User): UserInfo => ({
 });
 
 export default function useFirebaseAuth() {
+    const [token, setToken] = useState<string | null>(null);
     const [user, setUser] = useState<UserInfo | null>(null);
     const [loading, setLoading] = useState(true);
 
@@ -29,8 +30,11 @@ export default function useFirebaseAuth() {
         }
 
         setLoading(true);
+
         const formattedUser = formatAuthUser(authState);
         setUser(formattedUser);
+        await authState.getIdToken().then(setToken);
+
         setLoading(false);
     };
 
@@ -58,7 +62,7 @@ export default function useFirebaseAuth() {
         const currentUsername = user.displayName;
 
         if (username) {
-            await setDoc(doc(firestore, `users`, user.uid), { username });
+            await updateDoc(doc(firestore, `users`, user.uid), { username });
             await setDoc(doc(firestore, `usernames`, username), { uid: user.uid });
         }
 
@@ -78,6 +82,7 @@ export default function useFirebaseAuth() {
     }, []);
 
     return {
+        token,
         user,
         loading,
         signInWithEmailAndPassword: signInWithEmail,

@@ -9,6 +9,7 @@ export type UserInfo = {
 };
 
 export interface AuthUserContextType {
+    token: string | null;
     user: UserInfo | null;
     loading: boolean;
     signInWithEmailAndPassword: (email: string, password: string) => Promise<UserCredential>;
